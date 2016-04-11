@@ -1,0 +1,6 @@
+{
+  "name": "Herbs",
+  "tagline": "Monitors and controls an indoor herb garden",
+  "body": "### Welcome\r\nThis page describes a small project that allows me to monitor herbs that I grow indoors.  I am basically interested in the moisture level for each herb.  Additionally I can monitor temperature and humidity.  The collected information is then uploaded into separate feeds on [io.adafruit.com](https://io.adafruit.com).  Feeds are monitored by [IFTTT](https://ifttt.com/) application and when the moisture level falls below specified value, a notification is send to a smart phone, i.e. time to water the herbs.",
+  "note": "Don't delete this file! It's used internally to help with page regeneration."
+}
