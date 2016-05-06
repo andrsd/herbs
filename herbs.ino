@@ -46,11 +46,16 @@ float humidity = 0;
 
 // index of the herb that is dry
 int dry_idx[N_HERBS];
+bool dry_notified[N_HERBS];
 
 // last time you connected to the server, in milliseconds
 unsigned long last_connection_time = 0;
 // delay between updates, in milliseconds
 const unsigned long posting_interval = 10L * 1000L;
+// reset notifications after this amount of measurements
+const unsigned int dry_notify_reset_counter = 12;
+// number of samples collected so far
+unsigned int n_samples;
 
 char str[512];
 char s_number[32];
@@ -58,6 +63,13 @@ char s_number[32];
 // Initialize the Wifi client library
 WiFiClient client;
 #define USER_AGENT_HEADER     "User-Agent: ArduinoWiFi/1.1"
+
+
+/// Reset the notifications
+void reset_dry_notified() {
+  for (unsigned int i = 0; i < N_HERBS; i++)
+    dry_notified[i] = false;
+}
 
 void setup() {
   Serial.begin(9600);
@@ -71,6 +83,9 @@ void setup() {
   }
 
   dht.begin();
+
+  n_samples = 0;
+  reset_dry_notified();
 }
 
 void connect_to_wifi() {
@@ -182,6 +197,7 @@ void notify_if_dry() {
     if (n_dry == 1) {
       strcat(str, herb_name[dry_idx[0]]);
       strcat(str, " needs water.");
+      dry_notified[dry_idx[0]] = true;
     }
     else {
       for (int i = 0; i < n_dry; i++) {
@@ -190,6 +206,7 @@ void notify_if_dry() {
           strcat(str, ", ");
         else if (i < n_dry - 1)
           strcat(str, " and ");
+        dry_notified[dry_idx[i]] = true;
       }
       strcat(str, " need water.");
     }
@@ -234,6 +251,12 @@ void loop() {
 
       read_values();
       upload_values();
+      n_samples++;
+
+      if (n_samples >= dry_notify_reset_counter) {
+        reset_dry_notified();
+        n_samples = 0;
+      }
       notify_if_dry();
 
       WiFi.disconnect();
