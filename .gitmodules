@@ -1,0 +1,3 @@
+[submodule "DHT"]
+	path = DHT
+	url = https://github.com/andrsd/DHT-sensor-library.git

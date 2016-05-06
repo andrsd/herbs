@@ -1,0 +1,14 @@
+#!/bin/sh
+
+read -p "Enter your WiFi network name: " WLAN_SSID
+read -s -p "Enter your password the network (won't be printed on the screen): " WLAN_PSK
+echo
+read -p "Enter the cloud host name (e.g. example.com): " CLOUD_HOSTNAME
+read -p "Enter the cloud URI (e.g. /path/on/the/server): " CLOUD_URI
+read -p "Enter the key for IFTTT maker channel: " IFTTT_MAKER_KEY
+
+echo "#define WLAN_SSID        \"$WLAN_SSID\"" > config.h
+echo "#define WLAN_PASS        \"$WLAN_PSK\"" >> config.h
+echo "#define CLOUD_HOSTNAME   \"$CLOUD_HOSTNAME\"" >> config.h
+echo "#define CLOUD_URI        \"$CLOUD_URI\"" >> config.h
+echo "#define IFTTT_MAKER_KEY  \"$IFTTT_MAKER_KEY\"" >> config.h
