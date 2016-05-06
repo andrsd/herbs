@@ -139,7 +139,7 @@ void upload_values() {
   Serial.print("Connecting to ");
   Serial.print(CLOUD_HOSTNAME);
   Serial.print("... ");
-  if (client.connect(CLOUD_HOSTNAME, 80)) {
+  if (client.connect(CLOUD_HOSTNAME, CLOUD_PORT)) {
     Serial.println("done.");
 
     strcpy(str, "'{ ");
