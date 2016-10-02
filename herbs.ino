@@ -21,7 +21,7 @@ DHT dht(DHT_PIN, DHT_TYPE);
 
 #include "config.h"
 
-#define DRY_THRESHOLD   0.5
+#define DRY_THRESHOLD   0.2
 #define N_HERBS         6
 
 const char * herb_name[N_HERBS] = {
